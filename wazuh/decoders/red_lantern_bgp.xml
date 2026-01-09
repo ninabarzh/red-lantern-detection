@@ -1,9 +1,0 @@
-<decoders>
-  <!-- Red Lantern BGP session change decoder -->
-  <decoder name="red_lantern_bgp_adjchange_decoder">
-    <program_name>bgpd</program_name>
-    <prematch>NEIGHBOR_STATE_CHANGE</prematch>
-    <regex>NEIGHBOR_STATE_CHANGE:\s+peer=(\S+)\s+old_state=(\S+)\s+new_state=(\S+)</regex>
-    <order>0</order>
-  </decoder>
-</decoders>

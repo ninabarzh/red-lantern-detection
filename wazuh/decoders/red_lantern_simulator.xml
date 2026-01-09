@@ -1,7 +1,0 @@
-<decoders>
-  <!-- Red Lantern simulator JSON log decoder -->
-  <decoder name="red_lantern_simulator_json_decoder">
-    <program_name>simulator</program_name>
-    <type>json</type>
-  </decoder>
-</decoders>

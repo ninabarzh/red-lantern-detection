@@ -1,4 +1,4 @@
-<group name="red_lantern.bgp">
+<group name="red_lantern.syslog">
   <!-- BGP neighbor session state change -->
   <rule id="91001" level="5">
     <decoded_as>red_lantern_bgp_adjchange_decoder</decoded_as>
@@ -7,12 +7,21 @@
     <options>no_full_log</options>
   </rule>
 
-  <!-- BGP neighbor session down -->
+  <!-- Neighbor went down -->
   <rule id="91002" level="10">
     <if_sid>91001</if_sid>
     <description>Red Lantern | BGP | Neighbor session went down</description>
     <group>red_lantern.bgp</group>
     <options>no_full_log</options>
     <regex>new_state=down</regex>
+  </rule>
+
+  <!-- Neighbor came up -->
+  <rule id="91003" level="5">
+    <if_sid>91001</if_sid>
+    <description>Red Lantern | BGP | Neighbor session came up</description>
+    <group>red_lantern.bgp</group>
+    <options>no_full_log</options>
+    <regex>new_state=up</regex>
   </rule>
 </group>

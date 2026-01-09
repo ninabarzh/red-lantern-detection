@@ -1,0 +1,11 @@
+<decoders>
+  <decoder name="red_lantern_bgp_adjchange_decoder">
+    <prematch>BGP neighbor</prematch>
+  </decoder>
+
+  <decoder name="red_lantern_bgp_neighbor_state_decoder">
+    <parent>red_lantern_bgp_adjchange_decoder</parent>
+    <regex offset="after_parent">new_state=(up|down)</regex>
+    <order>router.neighbor_state</order>
+  </decoder>
+</decoders>

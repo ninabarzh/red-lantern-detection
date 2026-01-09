@@ -1,0 +1,36 @@
+<group name="red_lantern.bmp">
+  <!-- Generic BMP route message -->
+  <rule id="92001" level="3">
+    <decoded_as>red_lantern_bmp_route_decoder</decoded_as>
+    <description>Red Lantern | BMP | Generic route message</description>
+    <group>red_lantern.bmp</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <!-- Route details extracted -->
+  <rule id="92002" level="5">
+    <if_sid>92001</if_sid>
+    <description>Red Lantern | BMP | Route details extracted</description>
+    <group>red_lantern.bmp,bgp</group>
+    <options>no_full_log</options>
+    <regex>prefix (\S+) AS_PATH \[([\d,\s]+)\] NEXT_HOP (\S+) ORIGIN_AS (\d+)</regex>
+  </rule>
+
+  <!-- Monitored prefix announcement observed -->
+  <rule id="92003" level="7">
+    <if_sid>92002</if_sid>
+    <description>Red Lantern | BMP | Monitored prefix announcement observed</description>
+    <group>red_lantern.bmp,bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="bmp.prefix" type="pcre2">^203\.0\.113\.</field>
+  </rule>
+
+  <!-- Monitored prefix withdrawal observed -->
+  <rule id="92004" level="7">
+    <if_sid>92002</if_sid>
+    <description>Red Lantern | BMP | Monitored prefix withdrawal observed</description>
+    <group>red_lantern.bmp,bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="bmp.prefix" type="pcre2">^203\.0\.113\.</field>
+  </rule>
+</group>

@@ -1,19 +1,18 @@
 <group name="red_lantern.rpki">
-  <!-- RPKI invalid prefix detected -->
-  <rule id="93001" level="12">
-    <decoded_as>red_lantern_rpki_validator_decoder</decoded_as>
-    <description>Red Lantern | RPKI | Invalid prefix detected</description>
+  <!-- Generic RPKI validation event -->
+  <rule id="93001" level="5">
+    <decoded_as>red_lantern_rpki_decoder</decoded_as>
+    <description>Red Lantern | RPKI | Validation result observed</description>
     <group>red_lantern.rpki</group>
     <options>no_full_log</options>
-    <regex>INVALID</regex>
   </rule>
 
-  <!-- RPKI prefix expired -->
-  <rule id="93002" level="8">
+  <!-- RPKI state change -->
+  <rule id="93002" level="7">
     <if_sid>93001</if_sid>
-    <description>Red Lantern | RPKI | Prefix expired</description>
-    <group>red_lantern.rpki</group>
+    <description>Red Lantern | RPKI | Monitored prefix validation state</description>
+    <group>red_lantern.rpki,bgp,correlation</group>
     <options>no_full_log</options>
-    <regex>EXPIRED</regex>
+    <field name="rpki.state" type="pcre2">^(VALID|INVALID|UNKNOWN)$</field>
   </rule>
 </group>
