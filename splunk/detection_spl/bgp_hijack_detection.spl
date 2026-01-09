@@ -1,0 +1,5 @@
+# Detect BGP announcements from unexpected origin ASNs
+index=security sourcetype=red_lantern_json event_type="bgp_announcement"
+| where origin_asn != expected_origin
+| eval severity="High"
+| table _time prefix origin_asn expected_origin source_asn

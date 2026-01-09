@@ -1,0 +1,8 @@
+<decoders>
+  <!-- Red Lantern RPKI validation log decoder -->
+  <decoder name="red_lantern_rpki_validator_decoder">
+    <program_name>rpki-validator</program_name>
+    <regex>\[RPKI\]\s+(VALID|INVALID|EXPIRED):\s+prefix=(\S+)</regex>
+    <order>0</order>
+  </decoder>
+</decoders>

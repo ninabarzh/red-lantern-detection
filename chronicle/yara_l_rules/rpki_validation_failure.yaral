@@ -1,0 +1,10 @@
+rule rpki_validation_failure {
+  meta:
+    description = "Detects RPKI validation failures"
+    severity = "MEDIUM"
+  events:
+    $rpki.metadata.event_type = "rpki_validation"
+    $rpki.security_result.summary = "invalid"
+  condition:
+    $rpki
+}

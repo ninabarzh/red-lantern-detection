@@ -1,0 +1,9 @@
+<group name="red_lantern.simulator">
+  <!-- Simulator JSON event generic -->
+  <rule id="92001" level="3">
+    <decoded_as>red_lantern_simulator_json_decoder</decoded_as>
+    <description>Red Lantern | Simulator | Generic JSON event</description>
+    <group>red_lantern.simulator</group>
+    <options>no_full_log</options>
+  </rule>
+</group>

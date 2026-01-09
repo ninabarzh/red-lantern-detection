@@ -1,0 +1,7 @@
+# Detect invalid or expired RPKI prefixes
+index=security sourcetype=red_lantern_json event_type="rpki_validation"
+| where validation_state="invalid" OR validation_state="expired"
+| eval severity=case(
+    match(prefix, "203\\.0\\.113\\."), "Critical",
+    1=1, "Medium")
+| table _time prefix origin_asn expected_origin validation_state severity

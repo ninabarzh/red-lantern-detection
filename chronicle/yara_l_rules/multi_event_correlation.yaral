@@ -1,0 +1,14 @@
+rule bgp_attack_chain {
+  meta:
+    description = "Detects reconnaissance followed by BGP hijack"
+    severity = "CRITICAL"
+  events:
+    $recon.metadata.event_type = "reconnaissance"
+    $hijack.metadata.event_type = "bgp_announcement"
+    $hijack.principal.asn != $hijack.target.asn
+    $recon.principal.ip = $hijack.principal.ip
+  match:
+    $recon followed by $hijack over 1h
+  condition:
+    $recon and $hijack
+}

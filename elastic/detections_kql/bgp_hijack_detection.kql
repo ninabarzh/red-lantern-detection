@@ -1,0 +1,1 @@
+event_type: "bgp_announcement" and origin_asn: * and expected_origin: * and not origin_asn: expected_origin

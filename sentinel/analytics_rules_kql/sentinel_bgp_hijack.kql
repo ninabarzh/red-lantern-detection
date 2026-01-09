@@ -1,0 +1,5 @@
+RedLanternLogs_CL
+| where event_type_s == "bgp_announcement"
+| where origin_asn_s != expected_origin_s
+| extend Severity = "High"
+| project TimeGenerated, prefix_s, origin_asn_s, expected_origin_s, source_asn_s

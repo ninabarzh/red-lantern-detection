@@ -1,0 +1,10 @@
+rule bgp_hijack_detection {
+  meta:
+    description = "Detects BGP prefix announcements from unexpected origin ASNs"
+    severity = "HIGH"
+  events:
+    $announce.metadata.event_type = "bgp_announcement"
+    $announce.principal.asn != $announce.target.asn
+  condition:
+    $announce
+}

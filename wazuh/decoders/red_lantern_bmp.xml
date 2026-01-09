@@ -1,0 +1,41 @@
+<decoders>
+  <!-- Base BMP route line -->
+  <decoder name="red_lantern_bmp">
+    <prematch>^BMP ROUTE:</prematch>
+  </decoder>
+
+  <!-- BMP route details: prefix, AS_PATH, next hop, origin AS -->
+  <decoder name="red_lantern_bmp_details">
+    <parent>red_lantern_bmp</parent>
+    <regex offset="after_parent">
+      prefix (\S+) AS_PATH \[([\d, ]+)\] NEXT_HOP (\S+) ORIGIN_AS (\d+)
+    </regex>
+    <order>bmp.prefix,bmp.as_path,bmp.next_hop,bmp.origin_as</order>
+  </decoder>
+
+  <!-- BMP-style announcement (from simulator syslog output) -->
+  <decoder name="red_lantern_bmp_announcement">
+    <prematch>BGP announcement:</prematch>
+  </decoder>
+
+  <decoder name="red_lantern_bmp_announcement_details">
+    <parent>red_lantern_bmp_announcement</parent>
+    <regex offset="after_parent">
+      announcement: (\S+) from AS(\d+), RPKI validation: (\w+)
+    </regex>
+    <order>router.prefix,router.origin_as,router.rpki_state</order>
+  </decoder>
+
+  <!-- BMP-style withdrawal -->
+  <decoder name="red_lantern_bmp_withdrawal">
+    <prematch>BGP withdrawal:</prematch>
+  </decoder>
+
+  <decoder name="red_lantern_bmp_withdrawal_details">
+    <parent>red_lantern_bmp_withdrawal</parent>
+    <regex offset="after_parent">
+      withdrawal: (\S+) from AS(\d+)
+    </regex>
+    <order>router.prefix,router.origin_as</order>
+  </decoder>
+</decoders>

@@ -1,0 +1,7 @@
+# Detect reconnaissance followed by BGP hijack from same source IP within 1 hour
+index=security sourcetype=red_lantern_json (event_type="reconnaissance" OR (event_type="bgp_announcement" AND origin_asn!=expected_origin))
+| transaction source_ip maxspan=1h
+| where mvcount(event_type)>1
+| search event_type="reconnaissance" AND event_type="bgp_announcement"
+| eval attack_chain="reconnaissance_to_hijack"
+| table _time source_ip attack_chain event_type

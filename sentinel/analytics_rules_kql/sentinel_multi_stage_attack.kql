@@ -1,0 +1,11 @@
+let recon = RedLanternLogs_CL
+  | where event_type_s == "reconnaissance"
+  | project TimeGenerated, source_ip_s;
+let hijack = RedLanternLogs_CL
+  | where event_type_s == "bgp_announcement"
+  | where origin_asn_s != expected_origin_s
+  | project TimeGenerated, source_ip_s;
+recon
+| join kind=inner (hijack) on source_ip_s
+| where (hijack_TimeGenerated - TimeGenerated) between (0min .. 60min)
+| project ReconTime=TimeGenerated, HijackTime=hijack_TimeGenerated, source_ip_s
