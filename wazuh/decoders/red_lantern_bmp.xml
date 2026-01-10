@@ -1,13 +1,30 @@
 <decoders>
-  <decoder name="red_lantern_bmp_route_decoder">
+
+  <!-- BMP route announcement -->
+  <decoder name="red_lantern_bmp_announcement_decoder">
     <prematch>^BMP ROUTE:</prematch>
   </decoder>
 
-  <decoder name="red_lantern_bmp_route_details_decoder">
-    <parent>red_lantern_bmp_route_decoder</parent>
+  <decoder name="red_lantern_bmp_announcement_details_decoder">
+    <parent>red_lantern_bmp_announcement_decoder</parent>
     <regex offset="after_parent">
       prefix (\S+) AS_PATH \[([\d,\s]+)\] NEXT_HOP (\S+) ORIGIN_AS (\d+)
     </regex>
     <order>bmp.prefix,bmp.as_path,bmp.next_hop,bmp.origin_as</order>
   </decoder>
+
+  <!-- BMP route withdrawal -->
+  <decoder name="red_lantern_bmp_withdrawal_decoder">
+    <prematch>^BMP WITHDRAW:</prematch>
+  </decoder>
+
+  <decoder name="red_lantern_bmp_withdrawal_details_decoder">
+    <parent>red_lantern_bmp_withdrawal_decoder</parent>
+    <regex offset="after_parent">
+      prefix (\S+) ORIGIN_AS (\d+)
+    </regex>
+    <order>bmp.prefix,bmp.origin_as</order>
+  </decoder>
+
 </decoders>
+

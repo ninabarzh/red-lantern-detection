@@ -5,13 +5,13 @@ This folder contains Wazuh decoders and rules for Red Lantern detections.
 ## Folder structure
 
 - `decoders/` – Wazuh decoders (`<decoder>` elements). Each file is one log source:
-  - `red_lantern_bgp.xml` – BGP session events
-  - `red_lantern_simulator.xml` – simulator JSON logs
+  - `red_lantern_syslog.xml` – syslog BGP events
+  - `red_lantern_bmp.xml` – BGP monitoring
   - `red_lantern_rpki.xml` – RPKI validation logs
 
 - `rules/` – Wazuh rules (`<group>` + `<rule>` elements). Each file is a category:
-  - `red_lantern_bgp.xml` – rules for BGP events
-  - `red_lantern_simulator.xml` – rules for simulator events
+  - `red_lantern_syslog.xml` – syslog BGP events
+  - `red_lantern_bmp.xml` – BGP monitoring
   - `red_lantern_rpki.xml` – rules for RPKI events
 
 ## Naming and IDs
