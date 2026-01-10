@@ -1,4 +1,4 @@
-# Correlation input map (one‑page)
+# Correlation input map
 
 This page answers exactly one question: Which decoded fields feed which correlations, and from where?
 

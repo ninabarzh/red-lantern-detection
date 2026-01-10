@@ -1,0 +1,58 @@
+<group name="red_lantern.multi_stage_bgp_attack">
+  <!-- Multi-stage BGP attack: step 1 - BMP announce -->
+  <rule id="94001" level="5">
+    <decoded_as>red_lantern_bmp_announcement_decoder</decoded_as>
+    <description>Red Lantern | multi_stage_bgp_attack | BMP announcement observed</description>
+    <group>red_lantern.bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="bmp_event_type">announce</field>
+    <field name="bmp.prefix" type="pcre2">.*</field>
+    <field name="bmp.origin_as" type="pcre2">.*</field>
+    <event_correlation>
+      <rule_id>94002</rule_id>
+      <timeframe>3600</timeframe> <!-- 1 hour to catch validation -->
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Multi-stage BGP attack: step 2 - RPKI validation -->
+  <rule id="94002" level="7">
+    <decoded_as>red_lantern_rpki_decoder</decoded_as>
+    <description>Red Lantern | multi_stage_bgp_attack | Valid RPKI after BMP announce</description>
+    <group>red_lantern.rpki,bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="rpki.state" type="pcre2">VALID</field>
+    <field name="rpki.prefix" type="pcre2">.*</field>
+    <field name="rpki.origin_as" type="pcre2">.*</field>
+    <event_correlation>
+      <rule_id>94003</rule_id>
+      <timeframe>86400</timeframe> <!-- withdrawal can be delayed -->
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Multi-stage BGP attack: step 3 - optional router acceptance -->
+  <rule id="94003" level="8">
+    <decoded_as>red_lantern_bgp_neighbor_state_decoder</decoded_as>
+    <description>Red Lantern | multi_stage_bgp_attack | Router neighbor up (optional)</description>
+    <group>red_lantern.syslog,bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="router.neighbor_state">up</field>
+    <event_correlation>
+      <rule_id>94004</rule_id>
+      <timeframe>86400</timeframe>
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Multi-stage BGP attack: step 4 - BMP withdrawal -->
+  <rule id="94004" level="10">
+    <decoded_as>red_lantern_bmp_withdrawal_decoder</decoded_as>
+    <description>Red Lantern | multi_stage_bgp_attack | BMP withdrawal observed</description>
+    <group>red_lantern.bgp,correlation</group>
+    <options>no_full_log</options>
+    <field name="bmp_event_type">withdraw</field>
+    <field name="bmp.prefix" type="pcre2">.*</field>
+    <field name="bmp.origin_as" type="pcre2">.*</field>
+  </rule>
+</group>
