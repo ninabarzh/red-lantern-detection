@@ -4,7 +4,7 @@ The thing about a city that runs on light, logic, and the quiet hum of routers w
 humour. The Scarlet Semaphore, you see, was never meant to be a threat. In a dusty attic above a curry house that did 
 suspiciously good chips, they were a hackerspace, a guild of tinkerers. 
 
-[![Scarlet Semaphore](../assets/scarlet-semaphore.png)](https://red.tymyrddin.dev/docs/scarlet/)
+[![Scarlet Semaphore](https://github.com/ninabarzh/red-lantern-detection/blob/main/assets/scarlet-semaphore.png)](https://red.tymyrddin.dev/docs/scarlet/)
 
 [Their charter](https://red.tymyrddin.dev/docs/scarlet/charter) was one of curiosity, not conquest. They poked at 
 systems to see how they squeaked, a digital version of kicking tyres. Their latest project was 
@@ -12,7 +12,7 @@ systems to see how they squeaked, a digital version of kicking tyres. Their late
 dusty, important, and frankly rather pompous piece of civic plumbing that controlled professional certifications. 
 It was, in their view, [begging for a gentle nudge](https://red.tymyrddin.dev/docs/scarlet/op-red-lantern/rose/gambit).
 
-[![Operation Red Lantern or False Horizons](../assets/red-lanterns.png)](https://red.tymyrddin.dev/docs/scarlet/op-red-lantern/rose/patrician-red-line)
+[![Operation Red Lantern or False Horizons](https://github.com/ninabarzh/red-lantern-detection/blob/main/assets/red-lanterns.png)](https://red.tymyrddin.dev/docs/scarlet/op-red-lantern/rose/patrician-red-line)
 
 The nudge, however, had unforeseen consequences. It was like adjusting a single, obscure valve in a steamworks only 
 to find, three streets over, that all the red lanterns (the city’s critical signal lights for routing emergency data) 
@@ -24,7 +24,7 @@ This got you noticed. Specifically, it got you noticed by the Department of Sile
 [ensure the city's digital hum never became a screech](https://blue.tymyrddin.dev/docs/shadows/about), among 
 [other things](https://blue.tymyrddin.dev/docs/shadows/red-lantern/kickoff/internal-notice-tss).
 
-[![Dept. of Silent Stability](../assets/silent-stability.png)](https://blue.tymyrddin.dev/docs/shadows/)
+[![Dept. of Silent Stability](https://github.com/ninabarzh/red-lantern-detection/blob/main/assets/silent-stability.png)](https://blue.tymyrddin.dev/docs/shadows/)
 
 Their analysts, people who could read packet loss like tea leaves, drafted a deeply concerned 
 [internal briefing](https://blue.tymyrddin.dev/docs/shadows/red-lantern/kickoff/internal-briefing-doss). It was a 
@@ -33,7 +33,7 @@ masterpiece of understated alarm, outlining the "anomalous re-routing events" an
 themselves, who read it with a mixture of horror and professional pride. "Oh," said their de facto leader, a network 
 archaeologist named Ponder. "We've gone and done a proper thing, haven't we?"
 
-[![The Patrician](../assets/patrician.png)](https://indigo.tymyrddin.dev/docs/vetinari/)
+[![The Patrician](https://github.com/ninabarzh/red-lantern-detection/blob/main/assets/patrician.png)](https://indigo.tymyrddin.dev/docs/vetinari/)
 
 The matter landed, as all truly delicate matters did, 
 [on the desk of the Patrician](https://blue.tymyrddin.dev/docs/shadows/red-lantern/kickoff/to-his-eminence). 
@@ -47,7 +47,7 @@ His solution was a stroke of lateral thinking.
 the Patrician stated, sipping a delicate brandy, "has value. Your current method of satisfying it, however, involves 
 making the traffic lights dance. This is disruptive. I propose a change of venue."
 
-[![The Patrician](../assets/purple-lantern.png)](https://purple.tymyrddin.dev/docs/lantern/)
+[![Purple Lantern Practice Ltd](https://github.com/ninabarzh/red-lantern-detection/blob/main/assets/purple-lantern.png)](https://purple.tymyrddin.dev/docs/lantern/)
 
 And so, Purple Lantern Practice Ltd. was born. 
 [Its mandate was a delicious paradox](https://purple.tymyrddin.dev/docs/lantern/red-lanterns/spark/patrician-engagement): 
