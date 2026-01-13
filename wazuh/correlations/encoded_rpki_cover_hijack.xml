@@ -1,0 +1,58 @@
+<group name="red_lantern.rpki_cover_hijack">
+
+  <!-- Step 1: BMP announcement for monitored prefix -->
+  <rule id="10601" level="5">
+    <if_sid>10003</if_sid>
+    <description>
+      Red Lantern | rpki_cover_hijack | BMP announcement observed
+    </description>
+    <group>red_lantern.bgp,correlation</group>
+    <options>no_full_log</options>
+
+    <event_correlation>
+      <rule_id>10602</rule_id>
+      <timeframe>3600</timeframe> <!-- allow 1 hour for RPKI validation -->
+      <count>1</count>
+      <same_field>bmp.prefix</same_field>
+      <same_field>bmp.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+  <!-- Step 2: RPKI validation confirms announcement -->
+  <rule id="10602" level="7">
+    <if_sid>10102</if_sid>
+    <description>
+      Red Lantern | rpki_cover_hijack | RPKI validation confirmed
+    </description>
+    <group>red_lantern.rpki,correlation</group>
+    <options>no_full_log</options>
+    <field name="rpki.state" type="pcre2">VALID</field>
+
+    <event_correlation>
+      <rule_id>10603</rule_id>
+      <timeframe>86400</timeframe> <!-- allow asynchronous validator confirmation -->
+      <count>1</count>
+      <same_field>rpki.prefix</same_field>
+      <same_field>rpki.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+  <!-- Step 3: BMP withdrawal observed -->
+  <rule id="10603" level="8">
+    <if_sid>10004</if_sid>
+    <description>
+      Red Lantern | rpki_cover_hijack | BMP withdrawal observed
+    </description>
+    <group>red_lantern.bgp,correlation</group>
+    <options>no_full_log</options>
+
+    <event_correlation>
+      <rule_id>10602</rule_id>
+      <timeframe>172800</timeframe> <!-- withdrawals may occur up to 2 days later -->
+      <count>1</count>
+      <same_field>bmp.prefix</same_field>
+      <same_field>bmp.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+</group>

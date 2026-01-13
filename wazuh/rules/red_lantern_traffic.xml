@@ -1,0 +1,15 @@
+<group name="red_lantern.traffic">
+  <rule id="10301" level="7">
+    <decoded_as>red_lantern_traffic_anomaly_decoder</decoded_as>
+    <description>Red Lantern | Traffic | RTT or packet loss anomaly observed</description>
+    <group>red_lantern.traffic</group>
+    <options>no_full_log</options>
+  </rule>
+
+  <rule id="10302" level="5">
+    <if_sid>10301</if_sid>
+    <description>Red Lantern | Traffic | Traffic restored observed</description>
+    <group>red_lantern.traffic</group>
+    <options>no_full_log</options>
+  </rule>
+</group>

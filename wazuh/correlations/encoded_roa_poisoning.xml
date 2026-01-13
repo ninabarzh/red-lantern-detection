@@ -1,0 +1,60 @@
+<group name="red_lantern.roa_poisoning">
+
+  <!-- Step 1: RPKI validation observed as VALID -->
+  <rule id="10501" level="5">
+    <if_sid>10102</if_sid>
+    <description>
+      Red Lantern | roa_poisoning | RPKI validation observed
+    </description>
+    <group>red_lantern.rpki,correlation</group>
+    <options>no_full_log</options>
+    <field name="rpki.state" type="pcre2">VALID</field>
+
+    <event_correlation>
+      <rule_id>10502</rule_id>
+      <timeframe>86400</timeframe> <!-- allow for asynchronous validator updates -->
+      <count>1</count>
+      <same_field>rpki.prefix</same_field>
+      <same_field>rpki.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+  <!-- Step 2: Multiple validator confirmations -->
+  <rule id="10502" level="7">
+    <if_sid>10102</if_sid>
+    <description>
+      Red Lantern | roa_poisoning | Multiple validator confirmation
+    </description>
+    <group>red_lantern.rpki,correlation</group>
+    <options>no_full_log</options>
+    <field name="rpki.state" type="pcre2">VALID</field>
+
+    <event_correlation>
+      <rule_id>10503</rule_id>
+      <timeframe>86400</timeframe>
+      <count>2</count> <!-- Require at least 2 validator confirmations -->
+      <same_field>rpki.prefix</same_field>
+      <same_field>rpki.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+  <!-- Optional step: authentication context -->
+  <rule id="10503" level="8">
+    <decoded_as>red_lantern_auth_decoder</decoded_as>
+    <description>
+      Red Lantern | roa_poisoning | Optional registry/admin authentication
+    </description>
+    <group>red_lantern.auth,correlation</group>
+    <options>no_full_log</options>
+    <field name="user_action">roa_creation</field>
+
+    <event_correlation>
+      <rule_id>10502</rule_id>
+      <timeframe>86400</timeframe>
+      <count>1</count>
+      <same_field>rpki.prefix</same_field>
+      <same_field>rpki.origin_as</same_field>
+    </event_correlation>
+  </rule>
+
+</group>

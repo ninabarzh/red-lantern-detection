@@ -1,14 +1,13 @@
 <decoders>
   <decoder name="red_lantern_rpki_decoder">
-    <prematch>RPKI validation|ROA</prematch>
+    <prematch>ROA|Validator sync|RPKI validation</prematch>
   </decoder>
-
   <decoder name="red_lantern_rpki_details_decoder">
     <parent>red_lantern_rpki_decoder</parent>
     <regex offset="after_parent">
-      (\S+)\s+origin AS(\d+|None) -> (\w+)
+      (\S+)\s+AS(\d+|None)(?: -> (\w+))?(?: \((\w+)\))?
     </regex>
-    <order>rpki.prefix,rpki.origin_as,rpki.state</order>
+    <order>rpki.prefix,rpki.origin_as,rpki.state,rpki.validator</order>
   </decoder>
 </decoders>
 

@@ -1,11 +1,9 @@
 # Red Lantern detection
 
-This repository contains detection logic for the Red Lantern threat simulation across multiple SIEM platforms.  
+This repository contains detection logic for the Red Lantern threat simulation.  
 It is designed to be modular, orthogonal, and easy to extend with new log sources or SIEMs.
 
-## Overview
-
-### Wazuh
+## Wazuh
 
 ```
 wazuh/
@@ -17,19 +15,20 @@ wazuh/
 - Rules generate alerts.  
 - Rule IDs are in the 91000–93999 range to avoid collisions.  
 
-### Splunk
+## Splunk
 
 ```
 splunk/
 ├── inputs.conf         # log ingestion / sourcetype definitions
 ├── savedsearches.conf  # scheduled alerts
 └── detection_spl/      # SPL queries for interactive searches or alerts
+└── correlations/       # SPL queries for interactive searches or alerts
 ```
 
 - SPL queries detect BGP hijacks, RPKI validation failures, and multi-stage attacks.  
 - Each detection type has its own `.spl` file.  
 
-### Elastic Security
+## Elastic Security
 
 ```
 elastic/detections_kql/
@@ -39,7 +38,7 @@ elastic/detections_kql/
 - Each detection is a separate `.kql` file.  
 - Queries assume correct ECS mapping for log fields.  
 
-### Microsoft Sentinel
+## Microsoft Sentinel
 
 ```
 sentinel/analytics_rules_kql/
@@ -49,7 +48,7 @@ sentinel/analytics_rules_kql/
 - Each rule is a separate `.kql` file.  
 - Covers BGP hijack, RPKI failure, and multi-stage attack correlations.  
 
-### Google Chronicle
+## Google Chronicle
 
 ```
 chronicle/yara_l_rules/
@@ -57,32 +56,7 @@ chronicle/yara_l_rules/
 
 - YARA-L detection rules.  
 - Each rule is in its own `.yaral` file.  
-- Rules cover BGP hijack, RPKI failures, and multi-event correlations.  
-
-### Correlations
-
-```
-correlations/
-```
-
-- Multi-stage attack or cross-SIEM correlation logic.  
-- Can reference events from any SIEM or Wazuh rules.  
-
-### Scripts
-
-```
-scripts/
-```
-- Helper scripts for tests, deployment, or data processing.  
-
-### Tests
-
-```
-tests/
-```
-
-- Wazuh-specific tests are included.  
-- Future SIEM tests can be added here.  
+- Rules cover BGP hijack, RPKI failures, and multi-event correlations.
 
 ## Adding new detections
 
@@ -98,6 +72,4 @@ tests/
 ## Notes
 
 - Wazuh is the only platform using a decoder layer.  
-- All other SIEMs rely on their native ingestion/parsing mechanisms.  
-- Folder structure is designed to be modular and SIEM-agnostic, making it easy to extend the repository in the future.
-
+- All other SIEMs rely on their native ingestion/parsing mechanisms.

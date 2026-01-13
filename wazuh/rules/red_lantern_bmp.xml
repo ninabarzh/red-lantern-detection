@@ -1,15 +1,15 @@
 <group name="red_lantern.bmp">
   <!-- Generic BMP route message -->
-  <rule id="92001" level="3">
-    <decoded_as>red_lantern_bmp_route_decoder</decoded_as>
+  <rule id="10001" level="3">
+    <decoded_as>red_lantern_bgp_announcement_decoder</decoded_as>
     <description>Red Lantern | BMP | Generic route message</description>
     <group>red_lantern.bmp</group>
     <options>no_full_log</options>
   </rule>
 
   <!-- Route details extracted -->
-  <rule id="92002" level="5">
-    <if_sid>92001</if_sid>
+  <rule id="10002" level="5">
+    <if_sid>10001</if_sid>
     <description>Red Lantern | BMP | Route details extracted</description>
     <group>red_lantern.bmp,bgp</group>
     <options>no_full_log</options>
@@ -17,8 +17,8 @@
   </rule>
 
   <!-- Monitored prefix announcement observed -->
-  <rule id="92003" level="7">
-    <if_sid>92002</if_sid>
+  <rule id="10003" level="7">
+    <if_sid>10002</if_sid>
     <description>Red Lantern | BMP | Monitored prefix announcement observed</description>
     <group>red_lantern.bmp,bgp,correlation</group>
     <options>no_full_log</options>
@@ -26,8 +26,8 @@
   </rule>
 
   <!-- Monitored prefix withdrawal observed -->
-  <rule id="92004" level="7">
-    <if_sid>92002</if_sid>
+  <rule id="10004" level="7">
+    <if_sid>10002</if_sid>
     <description>Red Lantern | BMP | Monitored prefix withdrawal observed</description>
     <group>red_lantern.bmp,bgp,correlation</group>
     <options>no_full_log</options>

@@ -2,6 +2,8 @@
 
 This page answers exactly one question: Which decoded fields feed which correlations, and from where?
 
+*Note: Fields are marked as either decoded (explicitly parsed by Wazuh decoders) or derived/inferred (available via Wazuh timestamps, hostname, or correlation logic).*
+
 ## Log source → decoder → fields → correlation
 
 ### BMP (BGP Monitoring Protocol)
@@ -13,23 +15,25 @@ Decoder(s):
 * `red_lantern_bmp_announcement_decoder`
 * `red_lantern_bmp_withdrawal_decoder`
 
-Key decoded fields:
+Decoded fields:
 
-* `prefix`
-* `prefix_length`
-* `origin_as`
-* `as_path`
-* `next_hop`
-* `peer_as`
-* `bmp_event_type` (`announce` | `withdraw`)
-* `timestamp`
+* `bmp.prefix`
+* `bmp.as_path`
+* `bmp.next_hop`
+* `bmp.origin_as`
+
+Derived/inferred fields (for correlation):
+
+* event type (`announce` | `withdraw`)
+* prefix length
+* timestamp
 
 Consumed by correlations:
 
-| Correlation              | Fields used                                  |
-|--------------------------|----------------------------------------------|
-| `multi_stage_bgp_attack` | prefix, origin_as, bmp_event_type, timestamp |
-| `rpki_cover_hijack`      | prefix, origin_as, bmp_event_type, timestamp |
+| Correlation              | Fields used                                      |
+|--------------------------|--------------------------------------------------|
+| `multi_stage_bgp_attack` | bmp.prefix, bmp.origin_as, event type, timestamp |
+| `rpki_cover_hijack`      | bmp.prefix, bmp.origin_as, event type, timestamp |
 
 Notes:
 
@@ -45,15 +49,17 @@ Decoder(s):
 
 * `red_lantern_rpki_decoder`
 * `red_lantern_rpki_details_decoder`
-* (Optional) per‑validator variants if formats differ
 
-Key decoded fields:
+Decoded fields:
 
-* `rpki.prefix` – the announced prefix
-* `rpki.origin_as` – origin AS of the prefix
-* `rpki.state` – validation state (`valid` | `invalid` | `not_found`)
-* `validator_name` – optional, from hostname if available
-* `timestamp` – optional, from syslog timestamp
+* `rpki.prefix`
+* `rpki.origin_as`
+* `rpki.state`
+
+Derived/inferred fields:
+
+* validator name (from hostname if available)
+* timestamp (from syslog/Wazuh event)
 
 Consumed by correlations:
 
@@ -78,11 +84,14 @@ Decoder(s):
 * `red_lantern_bgp_adjchange_decoder`
 * `red_lantern_bgp_neighbor_state_decoder`
 
-Key decoded fields:
+Decoded fields:
 
-* `router.neighbor_state` – state of the BGP session (`up` | `down`)
-* `timestamp` – from syslog message
-* `router_id` – optional, can be inferred from syslog hostname if needed
+* `router.neighbor_state`
+
+Derived/inferred fields:
+
+* timestamp (from syslog)
+* router ID (from syslog hostname)
 
 Consumed by correlations:
 
@@ -101,45 +110,36 @@ Notes:
 
 ### roa_poisoning
 
-Requires RPKI validator logs
-
-Explicitly does NOT require: BMP and Router syslog
-
-Function: Detects trust manipulation without routing activity
+* Requires RPKI validator logs
+* Does not require BMP or Router syslog
+* Function: Detects trust manipulation without routing activity
 
 ### rpki_cover_hijack
 
-Requires BMP and RPKI validator logs
-
-Optional: Historical ROA change context
-
-Explicitly does NOT require *router syslog*
-
-Function: Detects active hijack under valid RPKI cover
+* Requires BMP and RPKI validator logs
+* Optional: Historical ROA change context
+* Does not require Router syslog
+* Function: Detects active hijack under valid RPKI cover
 
 ### multi_stage_bgp_attack
 
-Requires: BMP and RPKI validator logs
-
-Optional: Router control‑plane syslog
-
-Function: Detects full campaign lifecycle, including withdrawal
+* Requires BMP and RPKI validator logs
+* Optional: Router syslog
+* Function: Detects full campaign lifecycle, including withdrawals
 
 ## What is *not* part of correlations
 
-Explicitly excluded:
-
-* Simulator training events
 * Traffic payloads
 * NetFlow/IPFIX
 * Forwarding‑plane metrics
-* Syslog‑based BGP parsing
+* Syslog-based BGP parsing
 
-If it is not authoritative, it does not drive correlation.
+*If it is not authoritative, it does not drive correlation.*
 
-## Mental model (keep this)
+## Mental model
 
 * BMP = *What actually happened*
 * RPKI logs = *Why it was trusted*
 * Router syslog = *How the device reacted*
 * Correlations = *When the story makes sense*
+

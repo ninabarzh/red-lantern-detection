@@ -1,0 +1,37 @@
+<decoders>
+  <!-- BGP announcement -->
+  <decoder name="red_lantern_bgp_announcement_decoder">
+    <prematch>BGP announcement</prematch>
+  </decoder>
+  <decoder name="red_lantern_bgp_announcement_details_decoder">
+    <parent>red_lantern_bgp_announcement_decoder</parent>
+    <regex offset="after_parent">
+      (\S+) origin AS(\d+)(?:, RPKI (\w+))?
+    </regex>
+    <order>bgp.prefix,bgp.origin_as,bgp.rpki_state</order>
+  </decoder>
+
+  <!-- BGP update -->
+  <decoder name="red_lantern_bgp_update_decoder">
+    <prematch>BGP update</prematch>
+  </decoder>
+  <decoder name="red_lantern_bgp_update_details_decoder">
+    <parent>red_lantern_bgp_update_decoder</parent>
+    <regex offset="after_parent">
+      (received|advertised) (?:from|to) AS(\d+) for (\S+)(?: next-hop (\S+))?
+    </regex>
+    <order>bgp.action,bgp.peer_as,bgp.prefix,bgp.next_hop</order>
+  </decoder>
+
+  <!-- BGP withdrawal -->
+  <decoder name="red_lantern_bgp_withdrawal_decoder">
+    <prematch>BGP withdrawal|BGP withdraw</prematch>
+  </decoder>
+  <decoder name="red_lantern_bgp_withdrawal_details_decoder">
+    <parent>red_lantern_bgp_withdrawal_decoder</parent>
+    <regex offset="after_parent">
+      (\S+) from AS(\d+)(?: to peer (\d+))?
+    </regex>
+    <order>bgp.prefix,bgp.origin_as,bgp.peer_as</order>
+  </decoder>
+</decoders>

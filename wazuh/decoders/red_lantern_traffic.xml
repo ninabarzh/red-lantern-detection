@@ -1,0 +1,12 @@
+<decoders>
+  <decoder name="red_lantern_traffic_anomaly_decoder">
+    <prematch>Traffic anomaly|Traffic restored|Victim traffic normal</prematch>
+  </decoder>
+  <decoder name="red_lantern_traffic_anomaly_details_decoder">
+    <parent>red_lantern_traffic_anomaly_decoder</parent>
+    <regex offset="after_parent">
+      (?:Traffic anomaly for|Traffic restored for|Victim traffic normal:)? (\S+)(?: via AS(\d+))?(?:\: RTT (\d+)ms \(baseline (\d+)ms\), packet loss ([\d\.]+)%, region (\S+))?
+    </regex>
+    <order>traffic.prefix,traffic.asn,traffic.rtt,traffic.baseline,traffic.loss,traffic.region</order>
+  </decoder>
+</decoders>

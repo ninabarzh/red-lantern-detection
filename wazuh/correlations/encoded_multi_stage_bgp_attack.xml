@@ -1,0 +1,53 @@
+<group name="red_lantern.bgp_multistage">
+
+  <!-- Stage 1: monitored prefix announcement -->
+  <rule id="10401" level="6">
+    <if_sid>10003</if_sid>
+    <description>Red Lantern | BGP | Monitored prefix announced</description>
+    <group>red_lantern.bmp,bgp,correlation</group>
+    <options>no_full_log</options>
+
+    <event_correlation>
+      <rule_id>10402</rule_id>
+      <timeframe>3600</timeframe>
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Stage 2: RPKI validation state observed -->
+  <rule id="10402" level="7">
+    <if_sid>10102</if_sid>
+    <description>Red Lantern | BGP | RPKI state observed after announcement</description>
+    <group>red_lantern.rpki,bgp,correlation</group>
+    <options>no_full_log</options>
+
+    <event_correlation>
+      <rule_id>10403</rule_id>
+      <timeframe>86400</timeframe>
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Stage 3: withdrawal of the same monitored prefix -->
+  <rule id="10403" level="8">
+    <if_sid>10004</if_sid>
+    <description>Red Lantern | BGP | Monitored prefix withdrawn after validation</description>
+    <group>red_lantern.bmp,bgp,correlation</group>
+    <options>no_full_log</options>
+
+    <event_correlation>
+      <rule_id>10404</rule_id>
+      <timeframe>7200</timeframe>
+      <count>1</count>
+    </event_correlation>
+  </rule>
+
+  <!-- Stage 4: session instability confirmation -->
+  <rule id="10404" level="10">
+    <if_sid>10202</if_sid>
+    <description>Red Lantern | BGP | Prefix withdrawal followed by session drop</description>
+    <group>red_lantern.bgp,correlation,incident</group>
+    <options>no_full_log</options>
+  </rule>
+
+</group>

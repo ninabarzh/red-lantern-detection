@@ -1,6 +1,6 @@
 <group name="red_lantern.rpki">
   <!-- Generic RPKI validation event -->
-  <rule id="93001" level="5">
+  <rule id="10101" level="5">
     <decoded_as>red_lantern_rpki_decoder</decoded_as>
     <description>Red Lantern | RPKI | Validation result observed</description>
     <group>red_lantern.rpki</group>
@@ -8,8 +8,8 @@
   </rule>
 
   <!-- RPKI state change -->
-  <rule id="93002" level="7">
-    <if_sid>93001</if_sid>
+  <rule id="10102" level="7">
+    <if_sid>10101</if_sid>
     <description>Red Lantern | RPKI | Monitored prefix validation state</description>
     <group>red_lantern.rpki,bgp,correlation</group>
     <options>no_full_log</options>
