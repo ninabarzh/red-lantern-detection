@@ -7,8 +7,9 @@ It is designed to be modular, orthogonal, and easy to extend with new log source
 
 ```
 wazuh/
-├── decoders/   # Wazuh decoders for parsing logs
-├── rules/      # Wazuh rules referencing decoders
+├── decoders/       # Wazuh decoders for parsing logs
+├── rules/          # Wazuh rules referencing decoders
+└── correlations/   # Wazuh correlations for playbooks 1 through 3    
 ```
 
 - Decoders parse logs into fields.  
@@ -22,7 +23,6 @@ splunk/
 ├── inputs.conf         # log ingestion / sourcetype definitions
 ├── savedsearches.conf  # scheduled alerts
 └── detection_spl/      # SPL queries for interactive searches or alerts
-└── correlations/       # SPL queries for interactive searches or alerts
 ```
 
 - SPL queries detect BGP hijacks, RPKI validation failures, and multi-stage attacks.  
