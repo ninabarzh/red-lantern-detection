@@ -1,6 +1,6 @@
 # Red Lantern detection
 
-This repository contains detection logic for the Red Lantern threat simulation.  
+This repository contains detection logic for the [Red Lantern threat simulation](narrative.md).  
 It is designed to be modular, orthogonal, and easy to extend with new log sources or SIEMs.
 
 ## Wazuh
